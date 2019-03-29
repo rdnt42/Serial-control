@@ -1,6 +1,6 @@
 ﻿namespace SerialControl
 {
-    partial class Form1
+    partial class FormSerial
     {
         /// <summary>
         /// Required designer variable.
@@ -47,12 +47,14 @@
             // 
             // buttonPortRefresh
             // 
+            this.buttonPortRefresh.BackgroundImage = global::SerialControl.Properties.Resources.refr;
             this.buttonPortRefresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.buttonPortRefresh.Location = new System.Drawing.Point(179, 30);
             this.buttonPortRefresh.Name = "buttonPortRefresh";
             this.buttonPortRefresh.Size = new System.Drawing.Size(31, 31);
             this.buttonPortRefresh.TabIndex = 35;
             this.buttonPortRefresh.UseVisualStyleBackColor = true;
+            this.buttonPortRefresh.Click += new System.EventHandler(this.buttonPortRefresh_Click);
             // 
             // buttonFreq2
             // 
@@ -62,6 +64,7 @@
             this.buttonFreq2.TabIndex = 34;
             this.buttonFreq2.Text = "send freq";
             this.buttonFreq2.UseVisualStyleBackColor = true;
+            this.buttonFreq2.Click += new System.EventHandler(this.buttonFreq2_Click);
             // 
             // textBoxFreq2
             // 
@@ -78,6 +81,7 @@
             this.buttonOff2.TabIndex = 32;
             this.buttonOff2.Text = "OFF";
             this.buttonOff2.UseVisualStyleBackColor = true;
+            this.buttonOff2.Click += new System.EventHandler(this.buttonOff2_Click);
             // 
             // buttonOn2
             // 
@@ -87,6 +91,7 @@
             this.buttonOn2.TabIndex = 31;
             this.buttonOn2.Text = "ON";
             this.buttonOn2.UseVisualStyleBackColor = true;
+            this.buttonOn2.Click += new System.EventHandler(this.buttonOn2_Click);
             // 
             // buttonFreq1
             // 
@@ -96,6 +101,7 @@
             this.buttonFreq1.TabIndex = 30;
             this.buttonFreq1.Text = "send freq";
             this.buttonFreq1.UseVisualStyleBackColor = true;
+            this.buttonFreq1.Click += new System.EventHandler(this.buttonFreq1_Click);
             // 
             // textBoxFreq1
             // 
@@ -112,6 +118,7 @@
             this.buttonOff1.TabIndex = 28;
             this.buttonOff1.Text = "OFF";
             this.buttonOff1.UseVisualStyleBackColor = true;
+            this.buttonOff1.Click += new System.EventHandler(this.buttonOff1_Click);
             // 
             // buttonOn1
             // 
@@ -121,6 +128,7 @@
             this.buttonOn1.TabIndex = 27;
             this.buttonOn1.Text = "ON";
             this.buttonOn1.UseVisualStyleBackColor = true;
+            this.buttonOn1.Click += new System.EventHandler(this.buttonOn1_Click);
             // 
             // btn_send
             // 
@@ -130,6 +138,7 @@
             this.btn_send.TabIndex = 26;
             this.btn_send.Text = "send";
             this.btn_send.UseVisualStyleBackColor = true;
+            this.btn_send.Click += new System.EventHandler(this.btn_send_Click);
             // 
             // textBoxSend
             // 
@@ -157,6 +166,7 @@
             this.btn_close.TabIndex = 23;
             this.btn_close.Text = "Close Port";
             this.btn_close.UseVisualStyleBackColor = true;
+            this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
             // 
             // btn_open
             // 
@@ -166,6 +176,7 @@
             this.btn_open.TabIndex = 22;
             this.btn_open.Text = "Open Port";
             this.btn_open.UseVisualStyleBackColor = true;
+            this.btn_open.Click += new System.EventHandler(this.btn_open_Click);
             // 
             // comboBoxSerial
             // 
@@ -175,7 +186,7 @@
             this.comboBoxSerial.Size = new System.Drawing.Size(121, 21);
             this.comboBoxSerial.TabIndex = 21;
             // 
-            // Form1
+            // FormSerial
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -195,7 +206,7 @@
             this.Controls.Add(this.btn_close);
             this.Controls.Add(this.btn_open);
             this.Controls.Add(this.comboBoxSerial);
-            this.Name = "Form1";
+            this.Name = "FormSerial";
             this.Text = "Serial control";
             this.ResumeLayout(false);
             this.PerformLayout();
