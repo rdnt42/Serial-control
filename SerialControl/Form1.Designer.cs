@@ -28,121 +28,124 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonPortRefresh = new System.Windows.Forms.Button();
+            this.BtnPortRefresh = new System.Windows.Forms.Button();
             this.buttonFreq2 = new System.Windows.Forms.Button();
-            this.textBoxFreq2 = new System.Windows.Forms.TextBox();
-            this.buttonOff2 = new System.Windows.Forms.Button();
-            this.buttonOn2 = new System.Windows.Forms.Button();
-            this.buttonFreq1 = new System.Windows.Forms.Button();
-            this.textBoxFreq1 = new System.Windows.Forms.TextBox();
-            this.buttonOff1 = new System.Windows.Forms.Button();
-            this.buttonOn1 = new System.Windows.Forms.Button();
+            this.TxtBoxFreqMt = new System.Windows.Forms.TextBox();
+            this.BtnOffMt = new System.Windows.Forms.Button();
+            this.BtnOnMt = new System.Windows.Forms.Button();
+            this.BtnFreqMo = new System.Windows.Forms.Button();
+            this.TxtBoxFreqMo = new System.Windows.Forms.TextBox();
+            this.BtnOffMo = new System.Windows.Forms.Button();
+            this.BtnOnMo = new System.Windows.Forms.Button();
             this.btn_send = new System.Windows.Forms.Button();
             this.textBoxSend = new System.Windows.Forms.TextBox();
             this.textBoxRead = new System.Windows.Forms.TextBox();
-            this.btn_close = new System.Windows.Forms.Button();
-            this.btn_open = new System.Windows.Forms.Button();
+            this.BtnClose = new System.Windows.Forms.Button();
+            this.BtnOpen = new System.Windows.Forms.Button();
             this.comboBoxSerial = new System.Windows.Forms.ComboBox();
+            this.textBoxSerialStyle = new System.Windows.Forms.TextBox();
+            this.textBoxMoStyle = new System.Windows.Forms.TextBox();
+            this.textBoxMtStyle = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // buttonPortRefresh
+            // BtnPortRefresh
             // 
-            this.buttonPortRefresh.BackgroundImage = global::SerialControl.Properties.Resources.refr;
-            this.buttonPortRefresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.buttonPortRefresh.Location = new System.Drawing.Point(179, 30);
-            this.buttonPortRefresh.Name = "buttonPortRefresh";
-            this.buttonPortRefresh.Size = new System.Drawing.Size(31, 31);
-            this.buttonPortRefresh.TabIndex = 35;
-            this.buttonPortRefresh.UseVisualStyleBackColor = true;
-            this.buttonPortRefresh.Click += new System.EventHandler(this.buttonPortRefresh_Click);
+            this.BtnPortRefresh.BackgroundImage = global::SerialControl.Properties.Resources.refr;
+            this.BtnPortRefresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.BtnPortRefresh.Location = new System.Drawing.Point(179, 36);
+            this.BtnPortRefresh.Name = "BtnPortRefresh";
+            this.BtnPortRefresh.Size = new System.Drawing.Size(31, 31);
+            this.BtnPortRefresh.TabIndex = 35;
+            this.BtnPortRefresh.UseVisualStyleBackColor = true;
+            this.BtnPortRefresh.Click += new System.EventHandler(this.BtnPortRefresh_Click);
             // 
             // buttonFreq2
             // 
-            this.buttonFreq2.Location = new System.Drawing.Point(135, 243);
+            this.buttonFreq2.Location = new System.Drawing.Point(135, 319);
             this.buttonFreq2.Name = "buttonFreq2";
             this.buttonFreq2.Size = new System.Drawing.Size(75, 23);
             this.buttonFreq2.TabIndex = 34;
             this.buttonFreq2.Text = "send freq";
             this.buttonFreq2.UseVisualStyleBackColor = true;
-            this.buttonFreq2.Click += new System.EventHandler(this.buttonFreq2_Click);
+            this.buttonFreq2.Click += new System.EventHandler(this.BtnFreqMt_Click);
             // 
-            // textBoxFreq2
+            // TxtBoxFreqMt
             // 
-            this.textBoxFreq2.Location = new System.Drawing.Point(38, 243);
-            this.textBoxFreq2.Name = "textBoxFreq2";
-            this.textBoxFreq2.Size = new System.Drawing.Size(75, 20);
-            this.textBoxFreq2.TabIndex = 33;
+            this.TxtBoxFreqMt.Location = new System.Drawing.Point(38, 319);
+            this.TxtBoxFreqMt.Name = "TxtBoxFreqMt";
+            this.TxtBoxFreqMt.Size = new System.Drawing.Size(75, 20);
+            this.TxtBoxFreqMt.TabIndex = 33;
             // 
-            // buttonOff2
+            // BtnOffMt
             // 
-            this.buttonOff2.Location = new System.Drawing.Point(135, 195);
-            this.buttonOff2.Name = "buttonOff2";
-            this.buttonOff2.Size = new System.Drawing.Size(75, 23);
-            this.buttonOff2.TabIndex = 32;
-            this.buttonOff2.Text = "OFF";
-            this.buttonOff2.UseVisualStyleBackColor = true;
-            this.buttonOff2.Click += new System.EventHandler(this.buttonOff2_Click);
+            this.BtnOffMt.Location = new System.Drawing.Point(135, 277);
+            this.BtnOffMt.Name = "BtnOffMt";
+            this.BtnOffMt.Size = new System.Drawing.Size(75, 23);
+            this.BtnOffMt.TabIndex = 32;
+            this.BtnOffMt.Text = "OFF";
+            this.BtnOffMt.UseVisualStyleBackColor = true;
+            this.BtnOffMt.Click += new System.EventHandler(this.BtnOffMt_Click);
             // 
-            // buttonOn2
+            // BtnOnMt
             // 
-            this.buttonOn2.Location = new System.Drawing.Point(38, 195);
-            this.buttonOn2.Name = "buttonOn2";
-            this.buttonOn2.Size = new System.Drawing.Size(75, 23);
-            this.buttonOn2.TabIndex = 31;
-            this.buttonOn2.Text = "ON";
-            this.buttonOn2.UseVisualStyleBackColor = true;
-            this.buttonOn2.Click += new System.EventHandler(this.buttonOn2_Click);
+            this.BtnOnMt.Location = new System.Drawing.Point(38, 277);
+            this.BtnOnMt.Name = "BtnOnMt";
+            this.BtnOnMt.Size = new System.Drawing.Size(75, 23);
+            this.BtnOnMt.TabIndex = 31;
+            this.BtnOnMt.Text = "ON";
+            this.BtnOnMt.UseVisualStyleBackColor = true;
+            this.BtnOnMt.Click += new System.EventHandler(this.BtnOnMt_Click);
             // 
-            // buttonFreq1
+            // BtnFreqMo
             // 
-            this.buttonFreq1.Location = new System.Drawing.Point(135, 144);
-            this.buttonFreq1.Name = "buttonFreq1";
-            this.buttonFreq1.Size = new System.Drawing.Size(75, 23);
-            this.buttonFreq1.TabIndex = 30;
-            this.buttonFreq1.Text = "send freq";
-            this.buttonFreq1.UseVisualStyleBackColor = true;
-            this.buttonFreq1.Click += new System.EventHandler(this.buttonFreq1_Click);
+            this.BtnFreqMo.Location = new System.Drawing.Point(135, 196);
+            this.BtnFreqMo.Name = "BtnFreqMo";
+            this.BtnFreqMo.Size = new System.Drawing.Size(75, 23);
+            this.BtnFreqMo.TabIndex = 30;
+            this.BtnFreqMo.Text = "send freq";
+            this.BtnFreqMo.UseVisualStyleBackColor = true;
+            this.BtnFreqMo.Click += new System.EventHandler(this.BtnFreqMo_Click);
             // 
-            // textBoxFreq1
+            // TxtBoxFreqMo
             // 
-            this.textBoxFreq1.Location = new System.Drawing.Point(38, 144);
-            this.textBoxFreq1.Name = "textBoxFreq1";
-            this.textBoxFreq1.Size = new System.Drawing.Size(75, 20);
-            this.textBoxFreq1.TabIndex = 29;
+            this.TxtBoxFreqMo.Location = new System.Drawing.Point(38, 203);
+            this.TxtBoxFreqMo.Name = "TxtBoxFreqMo";
+            this.TxtBoxFreqMo.Size = new System.Drawing.Size(75, 20);
+            this.TxtBoxFreqMo.TabIndex = 29;
             // 
-            // buttonOff1
+            // BtnOffMo
             // 
-            this.buttonOff1.Location = new System.Drawing.Point(135, 86);
-            this.buttonOff1.Name = "buttonOff1";
-            this.buttonOff1.Size = new System.Drawing.Size(75, 23);
-            this.buttonOff1.TabIndex = 28;
-            this.buttonOff1.Text = "OFF";
-            this.buttonOff1.UseVisualStyleBackColor = true;
-            this.buttonOff1.Click += new System.EventHandler(this.buttonOff1_Click);
+            this.BtnOffMo.Location = new System.Drawing.Point(135, 154);
+            this.BtnOffMo.Name = "BtnOffMo";
+            this.BtnOffMo.Size = new System.Drawing.Size(75, 23);
+            this.BtnOffMo.TabIndex = 28;
+            this.BtnOffMo.Text = "OFF";
+            this.BtnOffMo.UseVisualStyleBackColor = true;
+            this.BtnOffMo.Click += new System.EventHandler(this.BtnOffMo_Click);
             // 
-            // buttonOn1
+            // BtnOnMo
             // 
-            this.buttonOn1.Location = new System.Drawing.Point(38, 86);
-            this.buttonOn1.Name = "buttonOn1";
-            this.buttonOn1.Size = new System.Drawing.Size(75, 23);
-            this.buttonOn1.TabIndex = 27;
-            this.buttonOn1.Text = "ON";
-            this.buttonOn1.UseVisualStyleBackColor = true;
-            this.buttonOn1.Click += new System.EventHandler(this.buttonOn1_Click);
+            this.BtnOnMo.Location = new System.Drawing.Point(38, 154);
+            this.BtnOnMo.Name = "BtnOnMo";
+            this.BtnOnMo.Size = new System.Drawing.Size(75, 23);
+            this.BtnOnMo.TabIndex = 27;
+            this.BtnOnMo.Text = "ON";
+            this.BtnOnMo.UseVisualStyleBackColor = true;
+            this.BtnOnMo.Click += new System.EventHandler(this.BtnOnMo_Click);
             // 
             // btn_send
             // 
-            this.btn_send.Location = new System.Drawing.Point(28, 359);
+            this.btn_send.Location = new System.Drawing.Point(343, 319);
             this.btn_send.Name = "btn_send";
             this.btn_send.Size = new System.Drawing.Size(75, 23);
             this.btn_send.TabIndex = 26;
             this.btn_send.Text = "send";
             this.btn_send.UseVisualStyleBackColor = true;
-            this.btn_send.Click += new System.EventHandler(this.btn_send_Click);
+            this.btn_send.Click += new System.EventHandler(this.BtnSend_Click);
             // 
             // textBoxSend
             // 
-            this.textBoxSend.Location = new System.Drawing.Point(28, 290);
+            this.textBoxSend.Location = new System.Drawing.Point(343, 248);
             this.textBoxSend.Multiline = true;
             this.textBoxSend.Name = "textBoxSend";
             this.textBoxSend.Size = new System.Drawing.Size(186, 63);
@@ -150,62 +153,105 @@
             // 
             // textBoxRead
             // 
-            this.textBoxRead.Location = new System.Drawing.Point(342, 52);
+            this.textBoxRead.Location = new System.Drawing.Point(343, 12);
             this.textBoxRead.Multiline = true;
             this.textBoxRead.Name = "textBoxRead";
             this.textBoxRead.ReadOnly = true;
-            this.textBoxRead.Size = new System.Drawing.Size(298, 277);
+            this.textBoxRead.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxRead.Size = new System.Drawing.Size(298, 228);
             this.textBoxRead.TabIndex = 24;
             // 
-            // btn_close
+            // BtnClose
             // 
-            this.btn_close.Enabled = false;
-            this.btn_close.Location = new System.Drawing.Point(227, 59);
-            this.btn_close.Name = "btn_close";
-            this.btn_close.Size = new System.Drawing.Size(75, 23);
-            this.btn_close.TabIndex = 23;
-            this.btn_close.Text = "Close Port";
-            this.btn_close.UseVisualStyleBackColor = true;
-            this.btn_close.Click += new System.EventHandler(this.btn_close_Click);
+            this.BtnClose.Enabled = false;
+            this.BtnClose.Location = new System.Drawing.Point(227, 70);
+            this.BtnClose.Name = "BtnClose";
+            this.BtnClose.Size = new System.Drawing.Size(75, 23);
+            this.BtnClose.TabIndex = 23;
+            this.BtnClose.Text = "Close Port";
+            this.BtnClose.UseVisualStyleBackColor = true;
+            this.BtnClose.Click += new System.EventHandler(this.BtnClose_Click);
             // 
-            // btn_open
+            // BtnOpen
             // 
-            this.btn_open.Location = new System.Drawing.Point(227, 30);
-            this.btn_open.Name = "btn_open";
-            this.btn_open.Size = new System.Drawing.Size(75, 23);
-            this.btn_open.TabIndex = 22;
-            this.btn_open.Text = "Open Port";
-            this.btn_open.UseVisualStyleBackColor = true;
-            this.btn_open.Click += new System.EventHandler(this.btn_open_Click);
+            this.BtnOpen.Location = new System.Drawing.Point(227, 36);
+            this.BtnOpen.Name = "BtnOpen";
+            this.BtnOpen.Size = new System.Drawing.Size(75, 23);
+            this.BtnOpen.TabIndex = 22;
+            this.BtnOpen.Text = "Open Port";
+            this.BtnOpen.UseVisualStyleBackColor = true;
+            this.BtnOpen.Click += new System.EventHandler(this.BtnOpen_Click);
             // 
             // comboBoxSerial
             // 
             this.comboBoxSerial.FormattingEnabled = true;
-            this.comboBoxSerial.Location = new System.Drawing.Point(38, 30);
+            this.comboBoxSerial.Location = new System.Drawing.Point(38, 36);
             this.comboBoxSerial.Name = "comboBoxSerial";
             this.comboBoxSerial.Size = new System.Drawing.Size(121, 21);
             this.comboBoxSerial.TabIndex = 21;
+            // 
+            // textBoxSerialStyle
+            // 
+            this.textBoxSerialStyle.BackColor = System.Drawing.Color.PaleTurquoise;
+            this.textBoxSerialStyle.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.textBoxSerialStyle.Font = new System.Drawing.Font("Georgia", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxSerialStyle.Location = new System.Drawing.Point(12, 12);
+            this.textBoxSerialStyle.Multiline = true;
+            this.textBoxSerialStyle.Name = "textBoxSerialStyle";
+            this.textBoxSerialStyle.ReadOnly = true;
+            this.textBoxSerialStyle.Size = new System.Drawing.Size(306, 104);
+            this.textBoxSerialStyle.TabIndex = 38;
+            this.textBoxSerialStyle.Text = "Serial";
+            // 
+            // textBoxMoStyle
+            // 
+            this.textBoxMoStyle.BackColor = System.Drawing.Color.PowderBlue;
+            this.textBoxMoStyle.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.textBoxMoStyle.Font = new System.Drawing.Font("Georgia", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxMoStyle.Location = new System.Drawing.Point(12, 122);
+            this.textBoxMoStyle.Multiline = true;
+            this.textBoxMoStyle.Name = "textBoxMoStyle";
+            this.textBoxMoStyle.ReadOnly = true;
+            this.textBoxMoStyle.Size = new System.Drawing.Size(306, 118);
+            this.textBoxMoStyle.TabIndex = 39;
+            this.textBoxMoStyle.Text = "Motor One";
+            // 
+            // textBoxMtStyle
+            // 
+            this.textBoxMtStyle.BackColor = System.Drawing.Color.PaleGreen;
+            this.textBoxMtStyle.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.textBoxMtStyle.Font = new System.Drawing.Font("Georgia", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxMtStyle.Location = new System.Drawing.Point(12, 246);
+            this.textBoxMtStyle.Multiline = true;
+            this.textBoxMtStyle.Name = "textBoxMtStyle";
+            this.textBoxMtStyle.ReadOnly = true;
+            this.textBoxMtStyle.Size = new System.Drawing.Size(306, 118);
+            this.textBoxMtStyle.TabIndex = 40;
+            this.textBoxMtStyle.Text = "Motor Two";
             // 
             // FormSerial
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(797, 404);
-            this.Controls.Add(this.buttonPortRefresh);
+            this.ClientSize = new System.Drawing.Size(690, 396);
+            this.Controls.Add(this.BtnPortRefresh);
             this.Controls.Add(this.buttonFreq2);
-            this.Controls.Add(this.textBoxFreq2);
-            this.Controls.Add(this.buttonOff2);
-            this.Controls.Add(this.buttonOn2);
-            this.Controls.Add(this.buttonFreq1);
-            this.Controls.Add(this.textBoxFreq1);
-            this.Controls.Add(this.buttonOff1);
-            this.Controls.Add(this.buttonOn1);
+            this.Controls.Add(this.TxtBoxFreqMt);
+            this.Controls.Add(this.BtnOffMt);
+            this.Controls.Add(this.BtnOnMt);
+            this.Controls.Add(this.BtnFreqMo);
+            this.Controls.Add(this.TxtBoxFreqMo);
+            this.Controls.Add(this.BtnOffMo);
+            this.Controls.Add(this.BtnOnMo);
             this.Controls.Add(this.btn_send);
             this.Controls.Add(this.textBoxSend);
             this.Controls.Add(this.textBoxRead);
-            this.Controls.Add(this.btn_close);
-            this.Controls.Add(this.btn_open);
+            this.Controls.Add(this.BtnClose);
+            this.Controls.Add(this.BtnOpen);
             this.Controls.Add(this.comboBoxSerial);
+            this.Controls.Add(this.textBoxSerialStyle);
+            this.Controls.Add(this.textBoxMoStyle);
+            this.Controls.Add(this.textBoxMtStyle);
             this.Name = "FormSerial";
             this.Text = "Serial control";
             this.ResumeLayout(false);
@@ -215,21 +261,24 @@
 
         #endregion
 
-        private System.Windows.Forms.Button buttonPortRefresh;
+        private System.Windows.Forms.Button BtnPortRefresh;
         private System.Windows.Forms.Button buttonFreq2;
-        private System.Windows.Forms.TextBox textBoxFreq2;
-        private System.Windows.Forms.Button buttonOff2;
-        private System.Windows.Forms.Button buttonOn2;
-        private System.Windows.Forms.Button buttonFreq1;
-        private System.Windows.Forms.TextBox textBoxFreq1;
-        private System.Windows.Forms.Button buttonOff1;
-        private System.Windows.Forms.Button buttonOn1;
+        private System.Windows.Forms.TextBox TxtBoxFreqMt;
+        private System.Windows.Forms.Button BtnOffMt;
+        private System.Windows.Forms.Button BtnOnMt;
+        private System.Windows.Forms.Button BtnFreqMo;
+        private System.Windows.Forms.TextBox TxtBoxFreqMo;
+        private System.Windows.Forms.Button BtnOffMo;
+        private System.Windows.Forms.Button BtnOnMo;
         private System.Windows.Forms.Button btn_send;
         private System.Windows.Forms.TextBox textBoxSend;
         private System.Windows.Forms.TextBox textBoxRead;
-        private System.Windows.Forms.Button btn_close;
-        private System.Windows.Forms.Button btn_open;
+        private System.Windows.Forms.Button BtnClose;
+        private System.Windows.Forms.Button BtnOpen;
         private System.Windows.Forms.ComboBox comboBoxSerial;
+        private System.Windows.Forms.TextBox textBoxSerialStyle;
+        private System.Windows.Forms.TextBox textBoxMoStyle;
+        private System.Windows.Forms.TextBox textBoxMtStyle;
     }
 }
 

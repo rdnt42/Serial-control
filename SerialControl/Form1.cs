@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms;
 using System.IO.Ports;
+using System.Threading;
 
 namespace SerialControl
 {
-     public partial class FormSerial : Form
+    public partial class FormSerial : Form
     {
         SerialPort serialVesper = new SerialPort();
         delegate void SetTextMainCallback(string text);
@@ -23,7 +23,6 @@ namespace SerialControl
         {
             InitializeComponent();
             GetNamePort();
-            this.textBoxRead.ScrollBars = ScrollBars.Vertical;
         }
 
         void GetNamePort()
@@ -33,7 +32,7 @@ namespace SerialControl
 
         }
 
-        private void btn_open_Click(object sender, EventArgs e)
+        private void BtnOpen_Click(object sender, EventArgs e)
         {
             try
             {
@@ -51,11 +50,11 @@ namespace SerialControl
                     serialVesper.Handshake = Handshake.None;
                     serialVesper.PortName = comboBoxSerial.Text;
                     serialVesper.ReadTimeout = 500;                    // TIME OUT
-                    serialVesper.DataReceived += new SerialDataReceivedEventHandler(serialPortVesper_DataReceived);
+                    serialVesper.DataReceived += new SerialDataReceivedEventHandler(SerialPort_DataReceived);
                     // serialVesper.ReadBufferSize = 8;
                     serialVesper.Open();
-                    btn_open.Enabled = false;
-                    btn_close.Enabled = true;
+                    BtnOpen.Enabled = false;
+                    BtnClose.Enabled = true;
                 }
             }
             catch (UnauthorizedAccessException)
@@ -64,11 +63,11 @@ namespace SerialControl
             }
         }
 
-        private void btn_close_Click(object sender, EventArgs e)
+        private void BtnClose_Click(object sender, EventArgs e)
         {
             serialVesper.Close();
-            btn_open.Enabled = true;
-            btn_close.Enabled = false;
+            BtnOpen.Enabled = true;
+            BtnClose.Enabled = false;
         }
         private void SetTextMain(string text)
         {
@@ -87,28 +86,35 @@ namespace SerialControl
                 if (sendMess[6] == reciveMess[6] && sendMess[7] == reciveMess[7])
                     textBoxRead.Text = "<<< " + text + " CRC OK" + Environment.NewLine
                                         + textBoxRead.Text;
-                else 
+                else
                     textBoxRead.Text = "<<< " + text + " CRC NOT OK" + Environment.NewLine
                                         + textBoxRead.Text;
 
             }
         }
-        private void serialPortVesper_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        private void SerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             byte[] arr = new byte[8];
             string data = "";
-            // Thread.Sleep(5);
-            // while (serialVesper.BytesToRead > 0)
+            Thread.Sleep(5);
+            int i = 0;
+            while (serialVesper.BytesToRead > 0)
+            {
+                reciveMess[i] = Convert.ToByte(serialVesper.ReadByte());
+                data += reciveMess[i];
+                i++;
+            }
+            /*
             for (int i = 0; i < 8; i++)
             {
                 reciveMess[i] = Convert.ToByte(serialVesper.ReadByte());
                 data += reciveMess[i];
             }
-
+            */
             SetTextMain(data);
         }
 
-        private void btn_send_Click(object sender, EventArgs e)
+        private void BtnSend_Click(object sender, EventArgs e)
         {
             serialVesper.WriteLine(textBoxSend.Text);
         }
@@ -134,7 +140,7 @@ namespace SerialControl
             }
             crc = (ushort)((crc >> 8) | (crc << 8));
 
-            return GetTwoWords10(crc);                  //перевод из 10 в 16
+            return GetTwoWords10(crc);                                      //перевод из 10 в 16
         }
 
         byte[] GetTwoWords10(int twoNumI)
@@ -176,7 +182,7 @@ namespace SerialControl
             return packageCrc;
         }
 
-        private void buttonOn1_Click(object sender, EventArgs e)
+        private void BtnOnMo_Click(object sender, EventArgs e)
         {
             byte[] package = CreatePackage(new byte[] { 0x08 }, new byte[] { 0x06 }, new byte[] { 0x00, 0x00 },
                        new byte[] { 0x00, 0x01 });
@@ -184,7 +190,7 @@ namespace SerialControl
             SendPackage(package);
         }
 
-        private void buttonOff1_Click(object sender, EventArgs e)
+        private void BtnOffMo_Click(object sender, EventArgs e)
         {
             byte[] package = CreatePackage(new byte[] { 0x08 }, new byte[] { 0x06 }, new byte[] { 0x00, 0x00 },
                        new byte[] { 0x00, 0x00 });
@@ -192,23 +198,23 @@ namespace SerialControl
             SendPackage(package);
         }
 
-        private void buttonFreq1_Click(object sender, EventArgs e)
+        private void BtnFreqMo_Click(object sender, EventArgs e)
         {
             byte[] package = CreatePackage(new byte[] { 0x08 }, new byte[] { 0x06 }, new byte[] { 0x00, 0x01 },
-                       SetFreqValue(textBoxFreq1.Text));
+                       SetFreqValue(TxtBoxFreqMo.Text));
             //serialVesper.Write(package, 0, package.Length);
             SendPackage(package);
         }
 
-        private void textBoxFreq1_KeyDown(object sender, KeyEventArgs e)
+        private void TxtBoxFreqMo_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                buttonFreq1_Click(sender, e);
+                BtnFreqMo_Click(sender, e);
             }
         }
 
-        private void buttonOn2_Click(object sender, EventArgs e)
+        private void BtnOnMt_Click(object sender, EventArgs e)
         {
             byte[] package = CreatePackage(new byte[] { 0x10 }, new byte[] { 0x06 }, new byte[] { 0x00, 0x00 },
                        new byte[] { 0x00, 0x01 });
@@ -216,7 +222,7 @@ namespace SerialControl
             SendPackage(package);
         }
 
-        private void buttonOff2_Click(object sender, EventArgs e)
+        private void BtnOffMt_Click(object sender, EventArgs e)
         {
             byte[] package = CreatePackage(new byte[] { 0x10 }, new byte[] { 0x06 }, new byte[] { 0x00, 0x00 },
                        new byte[] { 0x00, 0x00 });
@@ -225,18 +231,18 @@ namespace SerialControl
         }
 
 
-        private void textBoxFreq2_KeyDown(object sender, KeyEventArgs e)
+        private void TxttBoxFreqMt_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                buttonFreq2_Click(sender, e);
+                BtnFreqMt_Click(sender, e);
             }
         }
 
-        private void buttonFreq2_Click(object sender, EventArgs e)
+        private void BtnFreqMt_Click(object sender, EventArgs e)
         {
             byte[] package = CreatePackage(new byte[] { 0x10 }, new byte[] { 0x06 }, new byte[] { 0x00, 0x01 },
-                       SetFreqValue(textBoxFreq2.Text));
+                       SetFreqValue(TxtBoxFreqMt.Text));
             SendPackage(package);
             //serialVesper.Write(package, 0, package.Length);
         }
@@ -253,9 +259,10 @@ namespace SerialControl
                                         + textBoxRead.Text;
         }
 
-        private void buttonPortRefresh_Click(object sender, EventArgs e)
+        private void BtnPortRefresh_Click(object sender, EventArgs e)
         {
             GetNamePort();
         }
+
     }
 }
