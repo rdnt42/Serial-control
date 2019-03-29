@@ -37,7 +37,7 @@
             this.TxtBoxFreqMo = new System.Windows.Forms.TextBox();
             this.BtnOffMo = new System.Windows.Forms.Button();
             this.BtnOnMo = new System.Windows.Forms.Button();
-            this.btn_send = new System.Windows.Forms.Button();
+            this.BtnSend = new System.Windows.Forms.Button();
             this.textBoxSend = new System.Windows.Forms.TextBox();
             this.textBoxRead = new System.Windows.Forms.TextBox();
             this.BtnClose = new System.Windows.Forms.Button();
@@ -46,13 +46,15 @@
             this.textBoxSerialStyle = new System.Windows.Forms.TextBox();
             this.textBoxMoStyle = new System.Windows.Forms.TextBox();
             this.textBoxMtStyle = new System.Windows.Forms.TextBox();
+            this.RadioButtonMdbs = new System.Windows.Forms.RadioButton();
+            this.RadioButtonAny = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // BtnPortRefresh
             // 
             this.BtnPortRefresh.BackgroundImage = global::SerialControl.Properties.Resources.refr;
             this.BtnPortRefresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.BtnPortRefresh.Location = new System.Drawing.Point(179, 36);
+            this.BtnPortRefresh.Location = new System.Drawing.Point(165, 36);
             this.BtnPortRefresh.Name = "BtnPortRefresh";
             this.BtnPortRefresh.Size = new System.Drawing.Size(31, 31);
             this.BtnPortRefresh.TabIndex = 35;
@@ -133,15 +135,15 @@
             this.BtnOnMo.UseVisualStyleBackColor = true;
             this.BtnOnMo.Click += new System.EventHandler(this.BtnOnMo_Click);
             // 
-            // btn_send
+            // BtnSend
             // 
-            this.btn_send.Location = new System.Drawing.Point(343, 319);
-            this.btn_send.Name = "btn_send";
-            this.btn_send.Size = new System.Drawing.Size(75, 23);
-            this.btn_send.TabIndex = 26;
-            this.btn_send.Text = "send";
-            this.btn_send.UseVisualStyleBackColor = true;
-            this.btn_send.Click += new System.EventHandler(this.BtnSend_Click);
+            this.BtnSend.Location = new System.Drawing.Point(343, 319);
+            this.BtnSend.Name = "BtnSend";
+            this.BtnSend.Size = new System.Drawing.Size(75, 23);
+            this.BtnSend.TabIndex = 26;
+            this.BtnSend.Text = "send";
+            this.BtnSend.UseVisualStyleBackColor = true;
+            this.BtnSend.Click += new System.EventHandler(this.BtnSend_Click);
             // 
             // textBoxSend
             // 
@@ -218,7 +220,7 @@
             // 
             // textBoxMtStyle
             // 
-            this.textBoxMtStyle.BackColor = System.Drawing.Color.PaleGreen;
+            this.textBoxMtStyle.BackColor = System.Drawing.Color.LightGreen;
             this.textBoxMtStyle.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.textBoxMtStyle.Font = new System.Drawing.Font("Georgia", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxMtStyle.Location = new System.Drawing.Point(12, 246);
@@ -229,11 +231,38 @@
             this.textBoxMtStyle.TabIndex = 40;
             this.textBoxMtStyle.Text = "Motor Two";
             // 
+            // RadioButtonMdbs
+            // 
+            this.RadioButtonMdbs.AutoSize = true;
+            this.RadioButtonMdbs.BackColor = System.Drawing.Color.PaleTurquoise;
+            this.RadioButtonMdbs.Checked = true;
+            this.RadioButtonMdbs.Location = new System.Drawing.Point(38, 63);
+            this.RadioButtonMdbs.Name = "RadioButtonMdbs";
+            this.RadioButtonMdbs.Size = new System.Drawing.Size(63, 17);
+            this.RadioButtonMdbs.TabIndex = 42;
+            this.RadioButtonMdbs.TabStop = true;
+            this.RadioButtonMdbs.Text = "Modbus";
+            this.RadioButtonMdbs.UseVisualStyleBackColor = false;
+            // 
+            // RadioButtonAny
+            // 
+            this.RadioButtonAny.AutoSize = true;
+            this.RadioButtonAny.BackColor = System.Drawing.Color.PaleTurquoise;
+            this.RadioButtonAny.Location = new System.Drawing.Point(38, 86);
+            this.RadioButtonAny.Name = "RadioButtonAny";
+            this.RadioButtonAny.Size = new System.Drawing.Size(43, 17);
+            this.RadioButtonAny.TabIndex = 43;
+            this.RadioButtonAny.TabStop = true;
+            this.RadioButtonAny.Text = "Any";
+            this.RadioButtonAny.UseVisualStyleBackColor = false;
+            // 
             // FormSerial
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(690, 396);
+            this.ClientSize = new System.Drawing.Size(690, 408);
+            this.Controls.Add(this.RadioButtonAny);
+            this.Controls.Add(this.RadioButtonMdbs);
             this.Controls.Add(this.BtnPortRefresh);
             this.Controls.Add(this.buttonFreq2);
             this.Controls.Add(this.TxtBoxFreqMt);
@@ -243,7 +272,7 @@
             this.Controls.Add(this.TxtBoxFreqMo);
             this.Controls.Add(this.BtnOffMo);
             this.Controls.Add(this.BtnOnMo);
-            this.Controls.Add(this.btn_send);
+            this.Controls.Add(this.BtnSend);
             this.Controls.Add(this.textBoxSend);
             this.Controls.Add(this.textBoxRead);
             this.Controls.Add(this.BtnClose);
@@ -270,7 +299,7 @@
         private System.Windows.Forms.TextBox TxtBoxFreqMo;
         private System.Windows.Forms.Button BtnOffMo;
         private System.Windows.Forms.Button BtnOnMo;
-        private System.Windows.Forms.Button btn_send;
+        private System.Windows.Forms.Button BtnSend;
         private System.Windows.Forms.TextBox textBoxSend;
         private System.Windows.Forms.TextBox textBoxRead;
         private System.Windows.Forms.Button BtnClose;
@@ -279,6 +308,8 @@
         private System.Windows.Forms.TextBox textBoxSerialStyle;
         private System.Windows.Forms.TextBox textBoxMoStyle;
         private System.Windows.Forms.TextBox textBoxMtStyle;
+        private System.Windows.Forms.RadioButton RadioButtonMdbs;
+        private System.Windows.Forms.RadioButton RadioButtonAny;
     }
 }
 

@@ -14,7 +14,7 @@ namespace SerialControl
 {
     public partial class FormSerial : Form
     {
-        SerialPort serialVesper = new SerialPort();
+        SerialPort serialDevice = new SerialPort();
         delegate void SetTextMainCallback(string text);
         byte[] sendMess = new byte[8];
         byte[] reciveMess = new byte[8];
@@ -44,15 +44,15 @@ namespace SerialControl
                 else
                 {
 
-                    serialVesper.BaudRate = 9600;
-                    serialVesper.Parity = Parity.None;
-                    serialVesper.StopBits = StopBits.One;
-                    serialVesper.Handshake = Handshake.None;
-                    serialVesper.PortName = comboBoxSerial.Text;
-                    serialVesper.ReadTimeout = 500;                    // TIME OUT
-                    serialVesper.DataReceived += new SerialDataReceivedEventHandler(SerialPort_DataReceived);
-                    // serialVesper.ReadBufferSize = 8;
-                    serialVesper.Open();
+                    serialDevice.BaudRate = 9600;
+                    serialDevice.Parity = Parity.None;
+                    serialDevice.StopBits = StopBits.One;
+                    serialDevice.Handshake = Handshake.None;
+                    serialDevice.PortName = comboBoxSerial.Text;
+                    serialDevice.ReadTimeout = 500;                    // TIME OUT
+                    serialDevice.DataReceived += new SerialDataReceivedEventHandler(SerialPort_DataReceived);
+                    // serialDevice.ReadBufferSize = 8;
+                    serialDevice.Open();
                     BtnOpen.Enabled = false;
                     BtnClose.Enabled = true;
                 }
@@ -65,7 +65,7 @@ namespace SerialControl
 
         private void BtnClose_Click(object sender, EventArgs e)
         {
-            serialVesper.Close();
+            serialDevice.Close();
             BtnOpen.Enabled = true;
             BtnClose.Enabled = false;
         }
@@ -83,40 +83,71 @@ namespace SerialControl
             }
             else
             {
-                if (sendMess[6] == reciveMess[6] && sendMess[7] == reciveMess[7])
-                    textBoxRead.Text = "<<< " + text + " CRC OK" + Environment.NewLine
-                                        + textBoxRead.Text;
+                if (text == "TimeEx")
+                    textBoxRead.Text = "!!! " + " Time Out Exeption, check serial protocol" +
+                        Environment.NewLine + textBoxRead.Text;
                 else
-                    textBoxRead.Text = "<<< " + text + " CRC NOT OK" + Environment.NewLine
-                                        + textBoxRead.Text;
+                {
+                    if (RadioButtonMdbs.Checked == true)
+                    {
+                        if (sendMess[6] == reciveMess[6] && sendMess[7] == reciveMess[7] &&
+                        !(reciveMess[6] == 0 && reciveMess[7] == 0))
+                            OutMessage(text, " CRC OK");
+                        else if (reciveMess[6] == 0 && reciveMess[7] == 0)
+                            OutMessage(text, " NOT Modbus protocol");
+                        else
+                            OutMessage(text, " CRC NOT OK");
+                    }
+
+                    else if (RadioButtonAny.Checked == true)
+                    OutMessage(text, "");
+                }
 
             }
         }
+
+        public void OutMessage (string param, string text)
+        {
+            textBoxRead.Text = "<<< " + param + text + Environment.NewLine
+                                                + textBoxRead.Text;
+        }
+                    
         private void SerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             byte[] arr = new byte[8];
             string data = "";
-            Thread.Sleep(5);
-            int i = 0;
-            while (serialVesper.BytesToRead > 0)
+            if (RadioButtonMdbs.Checked == true)
             {
-                reciveMess[i] = Convert.ToByte(serialVesper.ReadByte());
-                data += reciveMess[i];
-                i++;
+                try
+                {
+                    for (int i = 0; i < 8; i++)
+                    {
+                        reciveMess[i] = Convert.ToByte(serialDevice.ReadByte());
+                        data += reciveMess[i];
+                    }
+                }
+                catch (TimeoutException ex)
+                {
+                    //ArgumentException argEx = new ArgumentException("Incorrect Serial protocol", "Protocol must be Modbus", ex);
+                    //throw argEx;
+                    SetTextMain("TimeEx");
+                }
             }
-            /*
-            for (int i = 0; i < 8; i++)
+            else if (RadioButtonAny.Checked == true)
             {
-                reciveMess[i] = Convert.ToByte(serialVesper.ReadByte());
-                data += reciveMess[i];
+                Thread.Sleep(5);
+                while (serialDevice.BytesToRead > 0)
+                {
+                    data += serialDevice.ReadByte();
+                }
             }
-            */
+
             SetTextMain(data);
         }
 
         private void BtnSend_Click(object sender, EventArgs e)
         {
-            serialVesper.WriteLine(textBoxSend.Text);
+            serialDevice.WriteLine(textBoxSend.Text);
         }
 
         public byte[] GetCrc(byte[] buf)
@@ -185,8 +216,7 @@ namespace SerialControl
         private void BtnOnMo_Click(object sender, EventArgs e)
         {
             byte[] package = CreatePackage(new byte[] { 0x08 }, new byte[] { 0x06 }, new byte[] { 0x00, 0x00 },
-                       new byte[] { 0x00, 0x01 });
-            //serialVesper.Write(package, 0, package.Length);
+             new byte[] { 0x00, 0x01 });
             SendPackage(package);
         }
 
@@ -194,7 +224,6 @@ namespace SerialControl
         {
             byte[] package = CreatePackage(new byte[] { 0x08 }, new byte[] { 0x06 }, new byte[] { 0x00, 0x00 },
                        new byte[] { 0x00, 0x00 });
-            // serialVesper.Write(package, 0, package.Length);
             SendPackage(package);
         }
 
@@ -202,7 +231,6 @@ namespace SerialControl
         {
             byte[] package = CreatePackage(new byte[] { 0x08 }, new byte[] { 0x06 }, new byte[] { 0x00, 0x01 },
                        SetFreqValue(TxtBoxFreqMo.Text));
-            //serialVesper.Write(package, 0, package.Length);
             SendPackage(package);
         }
 
@@ -218,7 +246,6 @@ namespace SerialControl
         {
             byte[] package = CreatePackage(new byte[] { 0x10 }, new byte[] { 0x06 }, new byte[] { 0x00, 0x00 },
                        new byte[] { 0x00, 0x01 });
-            //serialVesper.Write(package, 0, package.Length);
             SendPackage(package);
         }
 
@@ -226,7 +253,6 @@ namespace SerialControl
         {
             byte[] package = CreatePackage(new byte[] { 0x10 }, new byte[] { 0x06 }, new byte[] { 0x00, 0x00 },
                        new byte[] { 0x00, 0x00 });
-            //serialVesper.Write(package, 0, package.Length);
             SendPackage(package);
         }
 
@@ -244,13 +270,12 @@ namespace SerialControl
             byte[] package = CreatePackage(new byte[] { 0x10 }, new byte[] { 0x06 }, new byte[] { 0x00, 0x01 },
                        SetFreqValue(TxtBoxFreqMt.Text));
             SendPackage(package);
-            //serialVesper.Write(package, 0, package.Length);
         }
 
         public void SendPackage(byte[] sendPack)
         {
             string message = "";
-            serialVesper.Write(sendPack, 0, sendPack.Length);
+            serialDevice.Write(sendPack, 0, sendPack.Length);
             sendPack.CopyTo(sendMess, 0);
             foreach (var b in sendPack)
                 message += b.ToString();
