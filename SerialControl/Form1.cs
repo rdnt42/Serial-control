@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
+using System.IO;
 using System.Threading;
 
 namespace SerialControl
@@ -29,7 +30,6 @@ namespace SerialControl
         {
             String[] ports = SerialPort.GetPortNames();
             comboBoxSerial.Items.AddRange(ports);
-
         }
 
         private void BtnOpen_Click(object sender, EventArgs e)
@@ -38,7 +38,7 @@ namespace SerialControl
             {
                 if ((comboBoxSerial.Text == ""))
                 {
-                    textBoxRead.Text = "Select Port";
+                    textBoxRead.Text = "Select Port.";
                 }
 
                 else
@@ -55,11 +55,23 @@ namespace SerialControl
                     serialDevice.Open();
                     BtnOpen.Enabled = false;
                     BtnClose.Enabled = true;
+                    PrgBarSerial.Value = 1;
                 }
             }
+
             catch (UnauthorizedAccessException)
             {
-                textBoxRead.Text = "Port not open";
+                textBoxRead.Text = "Access is denied.";
+            }
+
+            catch (IOException)
+            {
+                textBoxRead.Text = "The port is in an invalid state.";
+            }
+
+            catch (InvalidOperationException)
+            {
+                textBoxRead.Text = "Port is already open";
             }
         }
 
@@ -68,7 +80,9 @@ namespace SerialControl
             serialDevice.Close();
             BtnOpen.Enabled = true;
             BtnClose.Enabled = false;
+            PrgBarSerial.Value = 0;
         }
+
         private void SetTextMain(string text)
         {
 
@@ -100,18 +114,18 @@ namespace SerialControl
                     }
 
                     else if (RadioButtonAny.Checked == true)
-                    OutMessage(text, "");
+                        OutMessage(text, "");
                 }
 
             }
         }
 
-        public void OutMessage (string param, string text)
+        public void OutMessage(string param, string text)
         {
             textBoxRead.Text = "<<< " + param + text + Environment.NewLine
                                                 + textBoxRead.Text;
         }
-                    
+
         private void SerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             byte[] arr = new byte[8];
@@ -126,7 +140,7 @@ namespace SerialControl
                         data += reciveMess[i];
                     }
                 }
-                catch (TimeoutException ex)
+                catch (TimeoutException)
                 {
                     //ArgumentException argEx = new ArgumentException("Incorrect Serial protocol", "Protocol must be Modbus", ex);
                     //throw argEx;
@@ -169,21 +183,25 @@ namespace SerialControl
                         crc >>= 1;
                 }
             }
+            //перевод из 10 в 16
             crc = (ushort)((crc >> 8) | (crc << 8));
 
-            return GetTwoWords10(crc);                                      //перевод из 10 в 16
+            return GetTwoWords10(crc);
         }
 
         byte[] GetTwoWords10(int twoNumI)
         {
+            //перевод из 10 в 16
             string twoNumS = twoNumI.ToString("x"); ;
 
             while (twoNumS.Length < 4)
                 while (twoNumS.Length < 4)
                     twoNumS = "0" + twoNumS;
             byte[] twoWords10 = new byte[2];
-            for (int i = 0; i < twoNumS.Length / 2; i++)                    //разбиение числа на 2
-            {                                                                 //перевод из 16 в 10
+            //разбиение числа на 2
+            for (int i = 0; i < twoNumS.Length / 2; i++)
+            {
+                //перевод из 16 в 10
                 twoWords10[i] = Convert.ToByte((twoNumS[i * 2].ToString() + twoNumS[i * 2 + 1].ToString()), 16);
 
             }
@@ -192,9 +210,19 @@ namespace SerialControl
 
         byte[] SetFreqValue(string freqRpm)
         {
-            int freqHz = Convert.ToInt32(Int32.Parse(freqRpm) * 3.33);
-            if (freqHz != 0) freqHz++;
-            return GetTwoWords10(freqHz);
+            try
+            {
+                int freqHz = Convert.ToInt32(Int32.Parse(freqRpm) * 3.33);
+                if (freqHz != 0) freqHz++;
+                return GetTwoWords10(freqHz);
+            }
+            catch (FormatException)
+            {
+                textBoxRead.Text = "Input string was not in a correct format" +
+                    Environment.NewLine + textBoxRead.Text;
+                throw;
+            }
+
         }
 
         byte[] CreatePackage(byte[] id, byte[] code, byte[] command, byte[] data)
@@ -229,6 +257,7 @@ namespace SerialControl
 
         private void BtnFreqMo_Click(object sender, EventArgs e)
         {
+            //try SetFreqValue(TxtBoxFreqMo.Text)
             byte[] package = CreatePackage(new byte[] { 0x08 }, new byte[] { 0x06 }, new byte[] { 0x00, 0x01 },
                        SetFreqValue(TxtBoxFreqMo.Text));
             SendPackage(package);
@@ -256,7 +285,6 @@ namespace SerialControl
             SendPackage(package);
         }
 
-
         private void TxttBoxFreqMt_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -275,13 +303,20 @@ namespace SerialControl
         public void SendPackage(byte[] sendPack)
         {
             string message = "";
-            serialDevice.Write(sendPack, 0, sendPack.Length);
-            sendPack.CopyTo(sendMess, 0);
-            foreach (var b in sendPack)
-                message += b.ToString();
+            try
+            {
+                serialDevice.Write(sendPack, 0, sendPack.Length);
+                sendPack.CopyTo(sendMess, 0);
+                foreach (var b in sendPack)
+                    message += b.ToString();
 
-            textBoxRead.Text = ">>> " + message + Environment.NewLine
-                                        + textBoxRead.Text;
+                textBoxRead.Text = ">>> " + message + Environment.NewLine
+                                            + textBoxRead.Text;
+            }
+            catch (InvalidOperationException)
+            {
+                textBoxRead.Text = "Port not open.";
+            }
         }
 
         private void BtnPortRefresh_Click(object sender, EventArgs e)

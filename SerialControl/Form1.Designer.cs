@@ -48,6 +48,7 @@
             this.textBoxMtStyle = new System.Windows.Forms.TextBox();
             this.RadioButtonMdbs = new System.Windows.Forms.RadioButton();
             this.RadioButtonAny = new System.Windows.Forms.RadioButton();
+            this.PrgBarSerial = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // BtnPortRefresh
@@ -100,7 +101,7 @@
             // 
             // BtnFreqMo
             // 
-            this.BtnFreqMo.Location = new System.Drawing.Point(135, 196);
+            this.BtnFreqMo.Location = new System.Drawing.Point(135, 203);
             this.BtnFreqMo.Name = "BtnFreqMo";
             this.BtnFreqMo.Size = new System.Drawing.Size(75, 23);
             this.BtnFreqMo.TabIndex = 30;
@@ -256,11 +257,22 @@
             this.RadioButtonAny.Text = "Any";
             this.RadioButtonAny.UseVisualStyleBackColor = false;
             // 
+            // PrgBarSerial
+            // 
+            this.PrgBarSerial.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.PrgBarSerial.Location = new System.Drawing.Point(165, 69);
+            this.PrgBarSerial.Maximum = 1;
+            this.PrgBarSerial.Name = "PrgBarSerial";
+            this.PrgBarSerial.Size = new System.Drawing.Size(31, 23);
+            this.PrgBarSerial.Step = 1;
+            this.PrgBarSerial.TabIndex = 44;
+            // 
             // FormSerial
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(690, 408);
+            this.Controls.Add(this.PrgBarSerial);
             this.Controls.Add(this.RadioButtonAny);
             this.Controls.Add(this.RadioButtonMdbs);
             this.Controls.Add(this.BtnPortRefresh);
@@ -310,6 +322,7 @@
         private System.Windows.Forms.TextBox textBoxMtStyle;
         private System.Windows.Forms.RadioButton RadioButtonMdbs;
         private System.Windows.Forms.RadioButton RadioButtonAny;
+        private System.Windows.Forms.ProgressBar PrgBarSerial;
     }
 }
 
