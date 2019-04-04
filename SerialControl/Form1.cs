@@ -29,6 +29,8 @@ namespace SerialControl
         void GetNamePort()
         {
             String[] ports = SerialPort.GetPortNames();
+            comboBoxSerial.Items.Clear();
+            comboBoxSerial.ResetText();
             comboBoxSerial.Items.AddRange(ports);
         }
 
@@ -38,7 +40,8 @@ namespace SerialControl
             {
                 if ((comboBoxSerial.Text == ""))
                 {
-                    textBoxRead.Text = "Select Port.";
+                    textBoxRead.Text = "Select Port." +
+                                    Environment.NewLine + textBoxRead.Text; ;
                 }
 
                 else
@@ -61,17 +64,20 @@ namespace SerialControl
 
             catch (UnauthorizedAccessException)
             {
-                textBoxRead.Text = "Access is denied.";
+                textBoxRead.Text = "Access is denied." +
+                                    Environment.NewLine + textBoxRead.Text; ;
             }
 
             catch (IOException)
             {
-                textBoxRead.Text = "The port is in an invalid state.";
+                textBoxRead.Text = "The port is in an invalid state." +
+                                    Environment.NewLine + textBoxRead.Text; ;
             }
 
             catch (InvalidOperationException)
             {
-                textBoxRead.Text = "Port is already open";
+                textBoxRead.Text = "Port is already open" +
+                                    Environment.NewLine + textBoxRead.Text; ;
             }
         }
 
@@ -208,26 +214,16 @@ namespace SerialControl
             return twoWords10;
         }
 
-        byte[] SetFreqValue(string freqRpm)
+        byte[] SetFreqValue(int freqRpm)
         {
-            try
-            {
-                int freqHz = Convert.ToInt32(Int32.Parse(freqRpm) * 3.33);
-                if (freqHz != 0) freqHz++;
-                return GetTwoWords10(freqHz);
-            }
-            catch (FormatException)
-            {
-                textBoxRead.Text = "Input string was not in a correct format" +
-                    Environment.NewLine + textBoxRead.Text;
-                throw;
-            }
 
+            int freqHz = Convert.ToInt32(freqRpm * 3.33);
+            if (freqHz != 0) freqHz++;
+            return GetTwoWords10(freqHz);
         }
 
         byte[] CreatePackage(byte[] id, byte[] code, byte[] command, byte[] data)
         {
-
             byte[] package = new byte[id.Length + code.Length
                                     + command.Length + data.Length];
             id.CopyTo(package, 0);
@@ -257,10 +253,25 @@ namespace SerialControl
 
         private void BtnFreqMo_Click(object sender, EventArgs e)
         {
-            //try SetFreqValue(TxtBoxFreqMo.Text)
-            byte[] package = CreatePackage(new byte[] { 0x08 }, new byte[] { 0x06 }, new byte[] { 0x00, 0x01 },
-                       SetFreqValue(TxtBoxFreqMo.Text));
-            SendPackage(package);
+            if (Int32.TryParse(TxtBoxFreqMo.Text, out int number))
+            {
+                byte[] package = CreatePackage(new byte[] { 0x08 }, new byte[] { 0x06 }, new byte[] { 0x00, 0x01 },
+                                       SetFreqValue(number));
+                SendPackage(package);
+            }
+
+            else
+            {
+                textBoxRead.Text = "Input string was not in a correct format" +
+                                    Environment.NewLine + textBoxRead.Text;
+            }
+            /*
+            try
+            {
+            }
+            catch (FormatException)
+            {
+            }*/
         }
 
         private void TxtBoxFreqMo_KeyDown(object sender, KeyEventArgs e)
@@ -295,9 +306,18 @@ namespace SerialControl
 
         private void BtnFreqMt_Click(object sender, EventArgs e)
         {
-            byte[] package = CreatePackage(new byte[] { 0x10 }, new byte[] { 0x06 }, new byte[] { 0x00, 0x01 },
-                       SetFreqValue(TxtBoxFreqMt.Text));
-            SendPackage(package);
+            if (Int32.TryParse(TxtBoxFreqMo.Text, out int number))
+            {
+                byte[] package = CreatePackage(new byte[] { 0x10 }, new byte[] { 0x06 }, new byte[] { 0x00, 0x01 },
+                       SetFreqValue(number));
+                SendPackage(package);
+            }
+
+            else
+            {
+                textBoxRead.Text = "Input string was not in a correct format" +
+                                    Environment.NewLine + textBoxRead.Text;
+            }
         }
 
         public void SendPackage(byte[] sendPack)
@@ -315,7 +335,8 @@ namespace SerialControl
             }
             catch (InvalidOperationException)
             {
-                textBoxRead.Text = "Port not open.";
+                textBoxRead.Text = "Port not open." +
+                                    Environment.NewLine + textBoxRead.Text; ;
             }
         }
 

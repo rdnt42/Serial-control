@@ -78,6 +78,7 @@
             this.TxtBoxFreqMt.Name = "TxtBoxFreqMt";
             this.TxtBoxFreqMt.Size = new System.Drawing.Size(75, 20);
             this.TxtBoxFreqMt.TabIndex = 33;
+            this.TxtBoxFreqMt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxttBoxFreqMt_KeyDown);
             // 
             // BtnOffMt
             // 
@@ -115,6 +116,7 @@
             this.TxtBoxFreqMo.Name = "TxtBoxFreqMo";
             this.TxtBoxFreqMo.Size = new System.Drawing.Size(75, 20);
             this.TxtBoxFreqMo.TabIndex = 29;
+            this.TxtBoxFreqMo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtBoxFreqMo_KeyDown);
             // 
             // BtnOffMo
             // 
