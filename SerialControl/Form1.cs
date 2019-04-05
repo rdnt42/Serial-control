@@ -40,21 +40,18 @@ namespace SerialControl
             {
                 if ((comboBoxSerial.Text == ""))
                 {
-                    textBoxRead.Text = "Select Port." +
-                                    Environment.NewLine + textBoxRead.Text; ;
+                    OutMessage('w', "", "Select Port.");
                 }
 
                 else
                 {
-
                     serialDevice.BaudRate = 9600;
                     serialDevice.Parity = Parity.None;
                     serialDevice.StopBits = StopBits.One;
                     serialDevice.Handshake = Handshake.None;
                     serialDevice.PortName = comboBoxSerial.Text;
-                    serialDevice.ReadTimeout = 500;                    // TIME OUT
+                    serialDevice.ReadTimeout = 500;
                     serialDevice.DataReceived += new SerialDataReceivedEventHandler(SerialPort_DataReceived);
-                    // serialDevice.ReadBufferSize = 8;
                     serialDevice.Open();
                     BtnOpen.Enabled = false;
                     BtnClose.Enabled = true;
@@ -64,20 +61,17 @@ namespace SerialControl
 
             catch (UnauthorizedAccessException)
             {
-                textBoxRead.Text = "Access is denied." +
-                                    Environment.NewLine + textBoxRead.Text; ;
+                OutMessage('w', "", "Access is denied.");
             }
 
             catch (IOException)
             {
-                textBoxRead.Text = "The port is in an invalid state." +
-                                    Environment.NewLine + textBoxRead.Text; ;
+                OutMessage('w', "", "The port is in an invalid state.");
             }
 
             catch (InvalidOperationException)
             {
-                textBoxRead.Text = "Port is already open" +
-                                    Environment.NewLine + textBoxRead.Text; ;
+                OutMessage('w', "", "Port is already open.");
             }
         }
 
@@ -99,36 +93,50 @@ namespace SerialControl
             {
                 SetTextMainCallback d = new SetTextMainCallback(SetTextMain);
                 this.Invoke(d, new object[] { text });
-
             }
             else
             {
                 if (text == "TimeEx")
-                    textBoxRead.Text = "!!! " + " Time Out Exeption, check serial protocol" +
-                        Environment.NewLine + textBoxRead.Text;
+                    OutMessage('w', "", "Time Out Exeption, check serial protocol.");
+
                 else
                 {
                     if (RadioButtonMdbs.Checked == true)
                     {
                         if (sendMess[6] == reciveMess[6] && sendMess[7] == reciveMess[7] &&
                         !(reciveMess[6] == 0 && reciveMess[7] == 0))
-                            OutMessage(text, " CRC OK");
+                            OutMessage('r', text, " CRC OK");
                         else if (reciveMess[6] == 0 && reciveMess[7] == 0)
-                            OutMessage(text, " NOT Modbus protocol");
+                            OutMessage('r', text, " NOT Modbus protocol.");
                         else
-                            OutMessage(text, " CRC NOT OK");
+                            OutMessage('r', text, " CRC NOT OK");
                     }
 
                     else if (RadioButtonAny.Checked == true)
-                        OutMessage(text, "");
+                        OutMessage('r',text, "");
                 }
-
             }
         }
 
-        public void OutMessage(string param, string text)
+        public void OutMessage(char messSymb, string text, string warning)
         {
-            textBoxRead.Text = "<<< " + param + text + Environment.NewLine
+            string messType;
+            switch (messSymb)
+            {
+                case 'w':
+                    messType = "!!!! ";
+                    break;
+                case 's':
+                    messType = ">>>> ";
+                    break;
+                case 'r':
+                    messType = "<<<< ";
+                    break;
+                default:
+                    messType = "err ";
+                    break;
+            }
+            textBoxRead.Text = messType + text + warning + Environment.NewLine
                                                 + textBoxRead.Text;
         }
 
@@ -167,7 +175,15 @@ namespace SerialControl
 
         private void BtnSend_Click(object sender, EventArgs e)
         {
-            serialDevice.WriteLine(textBoxSend.Text);
+            //rework
+            try
+            {
+                serialDevice.WriteLine(textBoxSend.Text);
+            }
+            catch
+            {
+                OutMessage('w', "", "Send Error");
+            }
         }
 
         public byte[] GetCrc(byte[] buf)
@@ -197,6 +213,7 @@ namespace SerialControl
 
         byte[] GetTwoWords10(int twoNumI)
         {
+            //rework
             //перевод из 10 в 16
             string twoNumS = twoNumI.ToString("x"); ;
 
@@ -262,16 +279,8 @@ namespace SerialControl
 
             else
             {
-                textBoxRead.Text = "Input string was not in a correct format" +
-                                    Environment.NewLine + textBoxRead.Text;
+                OutMessage('w', "", "Input string was not in a correct format.");
             }
-            /*
-            try
-            {
-            }
-            catch (FormatException)
-            {
-            }*/
         }
 
         private void TxtBoxFreqMo_KeyDown(object sender, KeyEventArgs e)
@@ -315,8 +324,7 @@ namespace SerialControl
 
             else
             {
-                textBoxRead.Text = "Input string was not in a correct format" +
-                                    Environment.NewLine + textBoxRead.Text;
+                OutMessage('w', "", "Input string was not in a correct format.");
             }
         }
 
@@ -329,14 +337,11 @@ namespace SerialControl
                 sendPack.CopyTo(sendMess, 0);
                 foreach (var b in sendPack)
                     message += b.ToString();
-
-                textBoxRead.Text = ">>> " + message + Environment.NewLine
-                                            + textBoxRead.Text;
+                OutMessage('s', message, "");
             }
             catch (InvalidOperationException)
             {
-                textBoxRead.Text = "Port not open." +
-                                    Environment.NewLine + textBoxRead.Text; ;
+                OutMessage('w', "", "Port not open.");
             }
         }
 
