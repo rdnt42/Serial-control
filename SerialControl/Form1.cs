@@ -113,7 +113,7 @@ namespace SerialControl
                     }
 
                     else if (RadioButtonAny.Checked == true)
-                        OutMessage('r',text, "");
+                        OutMessage('r', text, "");
                 }
             }
         }
@@ -176,9 +176,21 @@ namespace SerialControl
         private void BtnSend_Click(object sender, EventArgs e)
         {
             //rework
+            string message = textBoxSend.Text;
+            byte[] package = new byte[8];
+            byte[] messageByte = new byte[6];
+            byte[] crc = new byte[2];
             try
             {
-                serialDevice.WriteLine(textBoxSend.Text);
+                for (int i = 0; i < 6; i++)
+                {
+                    int parseInt = Int32.Parse(message[i * 2].ToString() + message[i * 2 + 1].ToString());
+                    messageByte[i] = Convert.ToByte(parseInt);
+                }
+                crc = GetCrc(messageByte);
+                messageByte.CopyTo(package, 0);
+                crc.CopyTo(package, messageByte.Length);
+                SendPackage(package);
             }
             catch
             {
@@ -233,7 +245,6 @@ namespace SerialControl
 
         byte[] SetFreqValue(int freqRpm)
         {
-
             int freqHz = Convert.ToInt32(freqRpm * 3.33);
             if (freqHz != 0) freqHz++;
             return GetTwoWords10(freqHz);

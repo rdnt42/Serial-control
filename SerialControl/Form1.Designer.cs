@@ -140,11 +140,11 @@
             // 
             // BtnSend
             // 
-            this.BtnSend.Location = new System.Drawing.Point(343, 319);
+            this.BtnSend.Location = new System.Drawing.Point(343, 291);
             this.BtnSend.Name = "BtnSend";
-            this.BtnSend.Size = new System.Drawing.Size(75, 23);
+            this.BtnSend.Size = new System.Drawing.Size(152, 23);
             this.BtnSend.TabIndex = 26;
-            this.BtnSend.Text = "send";
+            this.BtnSend.Text = "send MODBUS";
             this.BtnSend.UseVisualStyleBackColor = true;
             this.BtnSend.Click += new System.EventHandler(this.BtnSend_Click);
             // 
@@ -153,7 +153,7 @@
             this.textBoxSend.Location = new System.Drawing.Point(343, 248);
             this.textBoxSend.Multiline = true;
             this.textBoxSend.Name = "textBoxSend";
-            this.textBoxSend.Size = new System.Drawing.Size(186, 63);
+            this.textBoxSend.Size = new System.Drawing.Size(152, 37);
             this.textBoxSend.TabIndex = 25;
             // 
             // textBoxRead
